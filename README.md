@@ -2,8 +2,17 @@
 helper scripts for building and running Kubernetes Ingress Controllers
 ---
 
+The examples are meant to deploy an application and service it with one of the ingress controller types.
+ - nginx-ingress
+ - nginx-plus-ingress
+ - nginx-plus-nap
 
-## login
+These examples assume you have a running Kubernetes cluster and valid administrative credentials.
+
+The following sample applications are provided:
+ - arcadia
+
+## login to your cluster
 
 ```bash
 export KUBECONFIG=$HOME/.kube/myconfig
@@ -31,18 +40,29 @@ get a new self signed cert for default ingress
 ## nginx
 
 ### open source
-- building
-- pushing
+- building and pushing
+  ```bash
+    build_kic nginx-ingress 1.11.3 registry.domain.com
+  ```
 - deploying
 - examples
-### plus
-- building
-- pushing
+### [plus](https://github.com/nginxinc/kubernetes-ingress/blob/master/docs/nginx-plus.md)
+- building and pushing
+  ```bash
+    build_kic nginx-plus-ingress 1.11.3 registry.domain.com
+  ```
 - deploying
+  assumes your KUBECONFIG is set.
+  ```bash
+    deploy_kic 1.11.3 registry.domain.com
+  ```
 - examples
+    - [NginxPlus Examples Repo](https://github.com/nginxinc/kubernetes-ingress/tree/master/examples)
 ### plus app protect
 - building
-- pushing
+  ```bash
+    build_kic nginx-plus-ingress-nap 1.11.3 registry.domain.com
+  ```
 - deploying
 - examples
 

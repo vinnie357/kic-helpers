@@ -25,8 +25,12 @@ if [[ "${secretName}" = "none" ]]; then
 else
   echo "found secret $secretName"
   echo -n "Enter your vault hostname and press [ENTER]: "
+  echo ""
+  echo -n "default hostname is: http://localhost:8200 :"
   read vaultHost
   echo -n "Enter your vault token and press [ENTER]: "
+  echo ""
+  echo -n "default token is: root :"
   read -s vaultToken
   VAULT_ADDR=${vaultHost:-"http://localhost:8200"}
   VAULT_TOKEN=${vaultToken:-"root"}

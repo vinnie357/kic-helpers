@@ -1,7 +1,11 @@
 function vault_secrets {
 echo -n "Enter your vault hostname and press [ENTER]: "
+echo ""
+echo -n "default hostname is: http://localhost:8200 :"
 read vaultHost
 echo -n "Enter your vault token and press [ENTER]: "
+echo ""
+echo -n "default token is: root :"
 read -s vaultToken
 # echo -n "Enter your secret name and press [ENTER]: "
 # read secretName
