@@ -1,3 +1,17 @@
 fileignoreconfig:
 - filename: .devcontainer/scripts/docker-debian.sh
   checksum: 3109be3be53c3dad4a7cfcd0c07c87cd41ab26cc24e1fd4110fe69ecb955ae9a
+- filename: scripts/env_vars.sh
+  checksum: 237cbc1072a355eb6238f011ff22ef8f5fd2fbb2c33ec38b4784063948ec0da8
+- filename: scripts/vault_secrets.sh
+  checksum: 790e94e7388df3646a89c18e3f88599908aad05f5e156135f70f0610f63a52a3
+- filename: scripts/deploy_kic.sh
+  checksum: 8e2824412a747293183aaea70d25499ac9faeac730d92881f9fef03a1be3f420
+- filename: scripts/deploy_kic_source.sh
+  checksum: 5e3e12047b408606e157e6606d8f6abb719a5b57d2f1045c3f20bec6e41e036b
+- filename: scripts/build_kic.sh
+  checksum: d864ebd6b8a83d4a6f5372972d33fff4e65f0f52fd6d302935ee2e8479bc9b26
+- filename: scripts/new_cert.sh
+  checksum: e22484e5ff61d8d5f5abeba1b09f0d2d6a7ecabdee0aebe8de37bfe30f687078
+- filename: templates/kic/nginx-ingress-install.yml.tpl
+  checksum: 9c44bef689c814a135d6e49acd28c0d9fd5b4a319ce5ab2822e98a544de25799

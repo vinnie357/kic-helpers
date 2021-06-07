@@ -1,6 +1,13 @@
 # project specific
 admin.auto.tfvars
-
+certs/*
+*.crt
+*.key
+kubernetes-ingress
+nginx-ingress-dashboard.yml
+nginx-ingress-install.yml
+nginx-meshctl_linux.gz
+arcadia.yml
 # terraform lock files
 .terraform.lock.hcl
 

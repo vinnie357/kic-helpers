@@ -1,6 +1,66 @@
-# repository_template
-base repository template using f5-devops-containers
+# kic-helpers
+helper scripts for building and running Kubernetes Ingress Controllers
 ---
+
+
+## login
+
+```bash
+export KUBECONFIG=$HOME/.kube/myconfig
+```
+## Initialize helper scripts
+
+```bash
+. init.sh
+```
+
+## secrets
+example local vault container requires docker
+
+```bash
+cd vault-dev
+make vault && make test
+```
+
+## certs
+get a new self signed cert for default ingress
+
+```bash
+. init.sh && new_cert
+```
+## nginx
+
+### open source
+- building
+- pushing
+- deploying
+- examples
+### plus
+- building
+- pushing
+- deploying
+- examples
+### plus app protect
+- building
+- pushing
+- deploying
+- examples
+
+## troubleshooting
+
+### stuck namespace
+delete finalizers
+```bash
+NAMESPACE=my-namespace
+# check for resources
+kubectl -n $NAMESPACE get all
+# remove finalizers
+kubectl proxy &
+kubectl get namespace $NAMESPACE -o json |jq '.spec = {"finalizers":[]}' >temp.json
+curl -k -H "Content-Type: application/json" -X PUT --data-binary @temp.json 127.0.0.1:8001/api/v1/namespaces/$NAMESPACE/finalize
+```
+
+## devcontainer
 
 includes:
 - pre-commit
