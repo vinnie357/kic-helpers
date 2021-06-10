@@ -33,13 +33,14 @@ RUN set -ex \
     && bash /tmp/scripts/terraform-docs-debian.sh "${TERRAFORMDOCSVERSION}"
 
 # add extras
-# RUN set -ex \
+RUN set -ex \
     # https://github.com/vinnie357/devcontainers/tree/main/scripts-library/ubuntu
-    # && bash /tmp/scripts/my-script.sh
+    && bash /tmp/scripts/kubectl-helm-debian.sh \
+    && bash /tmp/scripts/kubectx-kubens-debian.sh
 
 # Clean up
 RUN set -ex \
-&& apt autoremove -y && apt clean -y
+    && apt autoremove -y && apt clean -y
 
 #change user
 USER ${USERNAME}

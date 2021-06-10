@@ -67,7 +67,17 @@ get a new self signed cert for default ingress
 - examples
 
 ## troubleshooting
+### network tools container
+```bash
+# public
+kubectl run multitool --image=praqma/network-multitool
+toolPod=$(kubectl get pods -o json | jq -r ".items[].metadata | select(.name | contains (\"multitool\")).name")
+kubectl exec -it $toolPod -- sh
 
+# redhat
+kubectl run debug-dns --image registry.access.redhat.com/rhel7/rhel-tools -it --rm -- bash
+
+```
 ### stuck namespace
 delete finalizers
 ```bash

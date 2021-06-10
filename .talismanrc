@@ -15,3 +15,17 @@ fileignoreconfig:
   checksum: e22484e5ff61d8d5f5abeba1b09f0d2d6a7ecabdee0aebe8de37bfe30f687078
 - filename: templates/kic/nginx-ingress-install.yml.tpl
   checksum: 9c44bef689c814a135d6e49acd28c0d9fd5b4a319ce5ab2822e98a544de25799
+- filename: templates/nsm/nsm-visibility-kic.yml.tpl
+  checksum: 38f1259cdb39891521d6f2027a8bbdc1a6bb26d657bb1e54ed89ff43a7f30263
+- filename: templates/kic/oidc/virtual-server-idp.yaml.tpl
+  checksum: 9c9c8d03e2b636effab7b8bd75191c8809db433acdc8cc0adae6908045c411bf
+- filename: templates/kic/oidc/client-secret.yaml.tpl
+  checksum: 44a7f44705dafa2339c478e407d2262fa946f448e4db1084176adf65dac06ce5
+- filename: templates/kic/oidc/tls-secret.yaml.tpl
+  checksum: 8652a7be653ac59ac130dee97b7e336e2228799e08d7dec297d347cffcf34d30
+- filename: templates/kic/oidc/oidc.yaml.tpl
+  checksum: bfe0fc15e95b8ba9dde8810d13c1c850b6f9701111bbec6fffbd279d41e93f16
+- filename: templates/kic/oidc/virtual-server.yaml.tpl
+  checksum: cd09cfb3e58f05226e5ef9f9f4b9219c8a168fab49c0ad5db7acaf5b1686fed5
+- filename: apps/pihole/readme.md
+  checksum: 67f08903c7db4a3dd2500a92e9baf7f838870d2d2af3391aaf33e58fdce19d6e

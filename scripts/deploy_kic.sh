@@ -1,6 +1,6 @@
 function deploy_kic {
 # deploys kic from registry
-version=${1:-"1.10.0"}
+version=${1:-"1.11.3"}
 registry=${2:-"registry.vin-lab.com"}
 # template kic files
 # modify for custom registry
