@@ -29,3 +29,7 @@ fileignoreconfig:
   checksum: cd09cfb3e58f05226e5ef9f9f4b9219c8a168fab49c0ad5db7acaf5b1686fed5
 - filename: apps/pihole/readme.md
   checksum: 67f08903c7db4a3dd2500a92e9baf7f838870d2d2af3391aaf33e58fdce19d6e
+- filename: scripts/build_kic.sh
+  checksum: 85dfefef768e126a2d195aba0c6e306b0a2457c423d401cfe11edbc8dfda5b8d
+- filename: scripts/vault_secrets.sh
+  checksum: 71ee5b96f2bb284c0410a02eb1f6402e7c5057c67d7a980a284288c41b0d3fcf

@@ -1,4 +1,5 @@
 function build_kic {
+# build_kic [type] [version] [registry] [secret]
 # build kic from source
 # optional type
 # optional secrets
@@ -11,7 +12,8 @@ registry=${3:-"registry.vin-lab.com"}
 secretName=${4:-"none"}
 dir=${PWD}
 # manage secrets
-if [[ "${secretName}" = "none" ]]; then
+needCerts="nginx-plus-ingress nginx-plus-ingress-nap"
+if [ "${secretName}" = "none" ] && [[ " ${needCerts[@]} " =~ " ${type} " ]]; then
   echo "using default secret"
   if [ -f "./certs/nginx-kic-default.crt" ] && [ -f "./certs/nginx-kic-default.key" ]; then
       echo "found default certs"
@@ -21,9 +23,6 @@ if [[ "${secretName}" = "none" ]]; then
       new_cert
   fi
   echo "ingest secrets"
-  vault_secrets
-else
-  echo "found secret $secretName"
   echo -n "Enter your vault hostname and press [ENTER]: "
   echo ""
   echo -n "default hostname is: http://localhost:8200 :"
@@ -32,8 +31,59 @@ else
   echo ""
   echo -n "default token is: root :"
   read -s vaultToken
-  VAULT_ADDR=${vaultHost:-"http://localhost:8200"}
+  echo ""
+  echo -n "Enter your secret name and press [ENTER]: "
+  read secret
+  # store secrets
+  #check for devcontainer docker assumes default docker network
+  if [[ "${vaultHost}" == "http://localhost:8200" ]]; then
+    defaultDocker="127.17.0.1"
+    route=$(ip route show default | awk '{ print $3}')
+    ip route show default | fgrep -q 'default via 172.17.0.1'
+    if [ $? -eq 0 ]; then
+      echo "matches docker address $route, $defaultDocker"
+      export VAULT_ADDR="http://${route}:8200"
+    else
+      echo "doesn't match docker $route, $defaultDocker"
+      export VAULT_ADDR=${vaultHost}
+    fi
+    else
+      # remote vault
+      export VAULT_ADDR=${vaultHost}
+  fi
+  vault_secrets $vaultHost $vaultToken $secret
   VAULT_TOKEN=${vaultToken:-"root"}
+else
+  if [[ "${type}" == "nginx-ingress" ]]; then
+    echo "oss skipping secrets"
+  else
+    echo "found secret $secretName"
+    echo -n "Enter your vault hostname and press [ENTER]: "
+    echo ""
+    echo -n "default hostname is: http://localhost:8200 :"
+    read vaultHost
+    echo -n "Enter your vault token and press [ENTER]: "
+    echo ""
+    echo -n "default token is: root :"
+    read -s vaultToken
+    #check for devcontainer docker assumes default docker network
+    if [[ "${vaultHost}" == "http://localhost:8200" ]]; then
+      defaultDocker="127.17.0.1"
+      route=$(ip route show default | awk '{ print $3}')
+      ip route show default | fgrep -q 'default via 172.17.0.1'
+      if [ $? -eq 0 ]; then
+        echo "matches docker address $route, $defaultDocker"
+        export VAULT_ADDR="http://${route}:8200"
+      else
+        echo "doesn't match docker $route, $defaultDocker"
+        export VAULT_ADDR=${vaultHost}
+      fi
+      else
+        # remote vault
+        export VAULT_ADDR=${vaultHost}
+    fi
+    VAULT_TOKEN=${vaultToken:-"root"}
+  fi
 fi
 echo "build kic container"
 # build kic+image
@@ -46,15 +96,15 @@ secretData=$(
 curl -s \
 --header "X-Vault-Token: $VAULT_TOKEN" \
 --request GET \
-$vaultHost/v1/secret/data/$secretName
+$VAULT_ADDR/v1/secret/data/$secretName
 )
 echo "writing secrets"
 cat << EOF > nginx-repo.crt
-$(echo $secretData | jq -r .nginxCert)
+$(echo $secretData | jq -r .data.data.nginxCert | base64 -d)
 EOF
 # key
 cat << EOF > nginx-repo.key
-$(echo $secretData | jq -r .nginxkey)
+$(echo $secretData | jq -r .data.data.nginxKey | base64 -d)
 EOF
 
 fi
